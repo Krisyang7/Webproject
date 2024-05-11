@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context reloadable="true">
+    <Resource
+            name="jdbc/ybcweb"
+            type="javax.sql.DataSource"
+            maxTotal="4"
+            maxIdle="2"
+            driverClassName="com.mysql.cj.jdbc.Driver"
+            url="jdbc:mysql://127.0.0.1:3306/webapp"
+            username="root"
+            password="1111aaaa"
+            maxWaitMillis="5000"/>
+</Context>
