@@ -18,4 +18,12 @@ public class People {
     public People() {
         // 空的构造函数
     }
+    public People(String id, String password, String gender, String email, String address, String phonenumber){
+        this.id=id;
+        this.password=password;
+        this.gender=gender;
+        this.email=email;
+        this.address=address;
+        this.phonenumber=phonenumber;
+    }
 }

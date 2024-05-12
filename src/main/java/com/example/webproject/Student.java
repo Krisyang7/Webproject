@@ -2,6 +2,7 @@ package com.example.webproject;
 
 import lombok.Data;
 
+
 @Data
 public class Student extends People{
     public Student(String id, String password, String gender, String email, String address, String phonenumber, String academy, String mentor, String major, String degree) {

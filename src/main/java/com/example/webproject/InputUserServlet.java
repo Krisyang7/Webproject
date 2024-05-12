@@ -1,8 +1,8 @@
 package com.example.webproject;
 
-import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 
 @WebServlet(name = "LoginServlet", urlPatterns = "/login.do")
 public class InputUserServlet extends HttpServlet {
