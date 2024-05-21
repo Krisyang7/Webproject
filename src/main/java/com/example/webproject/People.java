@@ -7,23 +7,21 @@ import lombok.Data;
 @AllArgsConstructor
 public class People {
     protected String id;
+    protected String name;
     protected String password;
     protected String gender;
     protected String email;
-    protected String address;
+    protected String address;//出生地
+    protected String nativePlace;//籍贯
     protected String phonenumber;
     protected String academy;
-
+    protected String trainstart;
+    protected String trainend;
+    protected String policyStatus;
+    protected String nameSpell;
+    protected String marrystatus;
     // 添加无参构造函数
     public People() {
         // 空的构造函数
-    }
-    public People(String id, String password, String gender, String email, String address, String phonenumber){
-        this.id=id;
-        this.password=password;
-        this.gender=gender;
-        this.email=email;
-        this.address=address;
-        this.phonenumber=phonenumber;
     }
 }
