@@ -63,8 +63,14 @@ public class LoginServlet extends HttpServlet {
                             StudentImpl studentimpl=new StudentImpl();
                             Student student=studentimpl.getStudentById(id);
                             request.setAttribute("student", student);
-                            RequestDispatcher dispatcher = request.getRequestDispatcher("student_info.jsp");
-                            dispatcher.forward(request, response);
+                            if(id.equals(password)){
+                                RequestDispatcher dispatcher = request.getRequestDispatcher("change_password.jsp");
+                                dispatcher.forward(request, response);
+                            }
+                            else {
+                                RequestDispatcher dispatcher = request.getRequestDispatcher("student_info.jsp");
+                                dispatcher.forward(request, response);
+                            }
                         }
                         else {
                             TeacherServlet teacherServlet=new TeacherServlet(id,connection);
