@@ -1,19 +1,23 @@
-package com.example.webproject;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import net.sourceforge.pinyin4j.PinyinHelper;
+package com.example.webproject.servelet;
+//import jakarta.servlet.ServletException;
+//import jakarta.servlet.annotation.WebServlet;
+//import jakarta.servlet.http.HttpServlet;
+//import jakarta.servlet.http.HttpServletRequest;
+//import jakarta.servlet.http.HttpServletResponse;
 
-//import javax.servlet.*;
-//import javax.servlet.annotation.WebServlet;
-//import javax.servlet.http.*;
+import com.example.webproject.Bean.Student;
+import com.example.webproject.Daos.StudentImpl;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-import java.io.*;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -56,7 +60,11 @@ public class LoginServlet extends HttpServlet {
                         String id=resultSet.getString("id");
 //                        搜索结果为学生
                         if (type.equals("0")){
-
+                            StudentImpl studentimpl=new StudentImpl();
+                            Student student=studentimpl.getStudentById(id);
+                            request.setAttribute("student", student);
+                            RequestDispatcher dispatcher = request.getRequestDispatcher("student_info.jsp");
+                            dispatcher.forward(request, response);
                         }
                         else {
                             TeacherServlet teacherServlet=new TeacherServlet(id,connection);

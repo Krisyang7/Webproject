@@ -1,6 +1,6 @@
-package com.example.webproject;
+package com.example.webproject.Daos;
 
-import jakarta.servlet.ServletException;
+import javax.servlet.ServletException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

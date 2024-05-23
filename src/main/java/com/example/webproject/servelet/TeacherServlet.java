@@ -1,11 +1,11 @@
-package com.example.webproject;
+package com.example.webproject.servelet;
 
 import com.example.webproject.Bean.Teacher;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.pinyin4j.PinyinHelper;
 
 import java.io.IOException;
