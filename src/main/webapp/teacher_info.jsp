@@ -29,12 +29,12 @@
 <%--</div>--%>
 <table border="1">
     <tr>
-        <td><b>学号:</b></td>
-        <td>${student.id}</td>
+        <td><b>教师编号:</b></td>
+        <td>${teacher.id}</td>
     </tr>
     <tr>
         <td><b>姓名:</b></td>
-        <td>${student.name}</td>
+        <td>${teacher.name}</td>
     </tr>
     <tr>
         <td><b>性别:</b></td>
