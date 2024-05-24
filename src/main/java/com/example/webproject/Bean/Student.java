@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 public class Student extends People {
-    public Student(String id,String name, String gender, String email, String address, String nativePlace,String college,String phonenumber, String academy, String trainstart,String trainend,String policyStatus,String nameSpell, String marrystatus,String mentor, String major, String degree) {
-        super(id,name, gender, email, address,nativePlace,college,phonenumber, academy,trainstart,trainend,policyStatus,nameSpell,marrystatus,major);
+    public Student(String id,String name, String gender, String email, String address, String nativePlace,String phonenumber, String academy, String trainstart,String trainend,String policyStatus,String marrystatus,String mentor, String major, String degree) {
+        super(id,name, gender, email, address,nativePlace,phonenumber, academy,trainstart,trainend,policyStatus,marrystatus,major);
         this.mentor = mentor;
         this.degree = degree;
     }

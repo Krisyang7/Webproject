@@ -18,7 +18,6 @@ public class ChangePasswordServlet extends HttpServlet {
         String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
         String confirmPassword = request.getParameter("confirmPassword");
-
         // 根据 ID 查询原密码
         String savedPassword = null;
         try {
@@ -26,11 +25,10 @@ public class ChangePasswordServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         // 检查输入的旧密码是否正确
         if (!oldPassword.equals(savedPassword)) {
-            request.setAttribute("error", "原密码输入错误");
-            request.getRequestDispatcher("change_password.jsp").forward(request, response);
+            request.getSession().setAttribute("error", "原密码输入错误");
+            response.sendRedirect("change_password.jsp");
             return;
         }
 
@@ -40,7 +38,7 @@ public class ChangePasswordServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        response.sendRedirect("Login.jsp");
+        response.sendRedirect("Login.jsp?passwordChanged=true");
 
 
     }

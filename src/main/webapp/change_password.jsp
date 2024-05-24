@@ -72,9 +72,10 @@
         <div class="form-group">
             <label for="oldPassword">Old Password:</label>
             <input type="password" id="oldPassword" name="oldPassword" class="form-control" required />
-            <% if (request.getAttribute("error") != null) { %>
-            <div class="error"><%= request.getAttribute("error") %></div>
-            <% } %>
+            <% if (session.getAttribute("error") != null) { %>
+            <div class="error"><%= session.getAttribute("error") %></div>
+            <% session.removeAttribute("error");
+            } %>
         </div>
         <div class="form-group">
             <label for="newPassword">New Password:</label>

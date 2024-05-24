@@ -105,7 +105,7 @@
             </tr>
             <tr>
                 <td><b>火车终点站:</b></td>
-                <td><input type="text" name="trainend" value="${student.tainend}" /></td>
+                <td><input type="text" name="trainend" value="${student.trainend}" /></td>
             </tr>
             <tr>
                 <td><b>婚姻情况:</b></td>

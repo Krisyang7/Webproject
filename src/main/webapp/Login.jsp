@@ -20,6 +20,26 @@ ${sessionScope.message}<br>
     </div>
     <input type="submit" value="立即登录" >
 </div>
+    <%
+        String passwordChanged = request.getParameter("passwordChanged");
+        if (passwordChanged != null && passwordChanged.equals("true")) {
+    %>
+    <div class="success-message">
+        密码修改成功！
+    </div>
+    <%
+        }
+    %>
+    <%
+        String login = request.getParameter("login");
+        if (login != null && login.equals("false")) {
+    %>
+    <div class="error-message">
+        账号或密码错误！
+    </div>
+    <%
+        }
+    %>
 </form>
 </body>
 </html>

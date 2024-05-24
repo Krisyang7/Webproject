@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
     public void init() throws ServletException {
         try {
             Context context = new InitialContext();
-            dataSource = (DataSource) context.lookup("java:comp/env/jdbc/ybcweb");
+            dataSource = (DataSource) context.lookup("java:comp/env/jdbc/wwtweb");
         } catch (Exception e) {
             throw new ServletException("Error initializing data source", e);
         }
@@ -62,7 +62,7 @@ public class LoginServlet extends HttpServlet {
                         if (type.equals("0")){
                             StudentImpl studentimpl=new StudentImpl();
                             Student student=studentimpl.getStudentById(id);
-                            request.setAttribute("student", student);
+                            request.getSession().setAttribute("student", student);
                             if(id.equals(password)){
                                 RequestDispatcher dispatcher = request.getRequestDispatcher("change_password.jsp");
                                 dispatcher.forward(request, response);
@@ -75,6 +75,9 @@ public class LoginServlet extends HttpServlet {
                         else {
                             TeacherServlet teacherServlet=new TeacherServlet(id,connection);
                         }
+                    }
+                    else {
+                        response.sendRedirect("Login.jsp?login=false");
                     }
                 }
         } catch (SQLException e) {

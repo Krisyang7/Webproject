@@ -23,7 +23,8 @@ public class StudentUpdateServlet extends HttpServlet{
         String phoneNumber = request.getParameter("phonenumber");
         String email = request.getParameter("email");
         String trainStart = request.getParameter("trainstart");
-        String trainEnd = request.getParameter("tainend");
+        String trainEnd = request.getParameter("trainend");
+
         try {
             studentimpl.updateStudentEmail(id,email);
             studentimpl.updateStudentPhoneNumber(id,phoneNumber);
@@ -31,8 +32,9 @@ public class StudentUpdateServlet extends HttpServlet{
 
             Student updatedStudent = studentimpl.getStudentById(id);
             request.setAttribute("student", updatedStudent);
+            RequestDispatcher requestDispatcher= request.getRequestDispatcher("student_info.jsp");
+            requestDispatcher.forward(request,resp);
 
-            resp.sendRedirect("student_info.jsp");
 
         } catch (Exception e) {
             // 处理异常情况，例如日志记录或向用户显示错误消息
