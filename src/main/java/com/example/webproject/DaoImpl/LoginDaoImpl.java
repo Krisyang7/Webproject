@@ -1,13 +1,14 @@
-package com.example.webproject.Daos;
+package com.example.webproject.DaoImpl;
 
 import com.example.webproject.Bean.Student;
+import com.example.webproject.Daos.LoginDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LoginDaoImpl implements LoginDao{
+public class LoginDaoImpl implements LoginDao {
     @Override
     public void UpdatePassword(String id,String password) throws SQLException {
         Connection conn = getConnection();

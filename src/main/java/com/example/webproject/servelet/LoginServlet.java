@@ -1,21 +1,19 @@
 package com.example.webproject.servelet;
-//import jakarta.servlet.ServletException;
-//import jakarta.servlet.annotation.WebServlet;
-//import jakarta.servlet.http.HttpServlet;
-//import jakarta.servlet.http.HttpServletRequest;
-//import jakarta.servlet.http.HttpServletResponse;
+
 
 import com.example.webproject.Bean.Student;
-import com.example.webproject.Daos.StudentImpl;
+import com.example.webproject.Bean.Teacher;
+import com.example.webproject.DaoImpl.StudentImpl;
+import com.example.webproject.DaoImpl.TeacherImpl;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
@@ -33,7 +31,7 @@ public class LoginServlet extends HttpServlet {
     public void init() throws ServletException {
         try {
             Context context = new InitialContext();
-            dataSource = (DataSource) context.lookup("java:comp/env/jdbc/wwtweb");
+            dataSource = (DataSource) context.lookup("java:comp/env/jdbc/ybcweb");
         } catch (Exception e) {
             throw new ServletException("Error initializing data source", e);
         }
@@ -73,7 +71,16 @@ public class LoginServlet extends HttpServlet {
                             }
                         }
                         else {
-                            TeacherServlet teacherServlet=new TeacherServlet(id,connection);
+                            Teacher teacher= new TeacherImpl().SelfQuary(id);
+                            request.getSession().setAttribute("teacher",teacher);
+                            if(id.equals(password)){
+                                RequestDispatcher dispatcher = request.getRequestDispatcher("change_password.jsp");
+                                dispatcher.forward(request, response);
+                            }
+                            else {
+                                RequestDispatcher dispatcher=request.getRequestDispatcher("teacher_info.jsp");
+                                dispatcher.forward(request,response);
+                            }
                         }
                     }
                     else {

@@ -1,6 +1,5 @@
 package com.example.webproject.Daos;
 
-import javax.servlet.ServletException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -17,7 +16,12 @@ public interface Dao {
             return dataSource;
     }
     public default Connection getConnection() throws SQLException {
-        DataSource dataSource=null;
+        DataSource dataSource= null;
+        try {
+            dataSource = getDataSource();
+        } catch (NamingException e) {
+            throw new RuntimeException(e);
+        }
         Connection conn=null;
         conn=dataSource.getConnection();
         return conn;

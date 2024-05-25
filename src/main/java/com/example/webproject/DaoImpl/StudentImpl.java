@@ -1,12 +1,13 @@
-package com.example.webproject.Daos;
+package com.example.webproject.DaoImpl;
 
 import com.example.webproject.Bean.Student;
+import com.example.webproject.Daos.StudentDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-public class StudentImpl implements StudentDao{
+public class StudentImpl implements StudentDao {
     @Override
     public Student getStudentById(String studentId) throws SQLException {
         Connection conn = getConnection();
