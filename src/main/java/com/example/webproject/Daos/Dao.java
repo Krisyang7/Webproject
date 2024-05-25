@@ -12,7 +12,7 @@ public interface Dao {
     public static DataSource getDataSource() throws NamingException {
         DataSource dataSource=null;
             Context context = new InitialContext();
-            dataSource = (DataSource) context.lookup("java:comp/env/jdbc/ybcweb");
+            dataSource = (DataSource) context.lookup("java:comp/env/jdbc/wwtweb");
             return dataSource;
     }
     public default Connection getConnection() throws SQLException {

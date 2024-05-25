@@ -48,6 +48,7 @@ public class LoginDaoImpl implements LoginDao {
                         Timestamp lockTime = resultSet.getTimestamp("locked");
                         if (lockTime == null) return false;
                         long lockDuration = 30 * 60 * 1000; // 锁定时长为30分钟
+                        System.out.println(System.currentTimeMillis() - lockTime.getTime());
                         return System.currentTimeMillis() - lockTime.getTime() < lockDuration;
                     }
                 }

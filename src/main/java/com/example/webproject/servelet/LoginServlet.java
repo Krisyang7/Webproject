@@ -6,12 +6,12 @@ import com.example.webproject.Bean.Teacher;
 import com.example.webproject.DaoImpl.LoginDaoImpl;
 import com.example.webproject.DaoImpl.StudentImpl;
 //import com.example.webproject.DaoImpl.TeacherImpl;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -55,6 +55,7 @@ public class LoginServlet extends HttpServlet {
                 preparedStatement.setString(1, userid);
                 preparedStatement.setString(2, password);
                 if (new LoginDaoImpl().isAccountLocked(userid)) {
+                    System.out.println("锁定");
                     response.sendRedirect("Login.jsp?locked=true");
                     return;
                 }
@@ -64,6 +65,7 @@ public class LoginServlet extends HttpServlet {
                         String id=resultSet.getString("id");
                         request.getSession().setAttribute("id",id);
 
+                        new LoginDaoImpl().resetFailedLoginAttempts(id);
                         //密码过期
                         if (isPasswordChangeRequired(resultSet.getDate("lastPasswordChangeDate"))) {
                             RequestDispatcher dispatcher = request.getRequestDispatcher("change_password.jsp?overday=true");
@@ -91,7 +93,8 @@ public class LoginServlet extends HttpServlet {
                         }
                     }
                     else {
-                        response.sendRedirect("Login.jsp?login=false");
+                        handleFailedLogin(userid,request,response);
+//                        response.sendRedirect("Login.jsp?login=false");
                     }
                 }
         } catch (SQLException e) {
@@ -109,7 +112,7 @@ public class LoginServlet extends HttpServlet {
         // 获取学生信息等操作
         // 根据需要进行密码是否与id相同的判断
         if (id.equals(password)) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("ChangePasswordPage.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("change_password.jsp");
             dispatcher.forward(request, response);
         } else {
             RequestDispatcher dispatcher = request.getRequestDispatcher("student_info.jsp");
