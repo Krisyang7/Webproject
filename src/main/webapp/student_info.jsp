@@ -69,7 +69,7 @@
             </tr>
             <tr>
                 <td><b>学院:</b></td>
-                <td>${student.academy}</td>
+                <td>${student.college}</td>
             </tr>
             <tr>
                 <td><b>导师:</b></td>
