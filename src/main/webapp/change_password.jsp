@@ -68,7 +68,7 @@
 <body>
 <div class="container">
     <form action="ChangePasswordServlet" method="post" class="form" onsubmit="return validatePassword()">
-        <input type="hidden" name="id" value="${student.id}" />
+        <input type="hidden" name="id" value="${sessionScope.id}" />
         <div class="form-group">
             <label for="oldPassword">Old Password:</label>
             <input type="password" id="oldPassword" name="oldPassword" class="form-control" required />
@@ -90,6 +90,16 @@
         <div class="form-group">
             <button type="submit" class="btn">Change Password</button>
         </div>
+        <%
+            String overday = request.getParameter("overday");
+            if (overday != null && overday.equals("true")) {
+        %>
+        <div class="error-message">
+            密码过期！
+        </div>
+        <%
+            }
+        %>
     </form>
 </div>
 

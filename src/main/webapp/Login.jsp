@@ -40,6 +40,16 @@ ${sessionScope.message}<br>
     <%
         }
     %>
+    <%
+        String locked = request.getParameter("locked");
+        if (locked != null && locked.equals("true")) {
+    %>
+    <div class="error-message">
+        账号已锁定！
+    </div>
+    <%
+        }
+    %>
 </form>
 </body>
 </html>
