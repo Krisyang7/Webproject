@@ -113,7 +113,10 @@
             </tr>
         </table>
         <div>
-            <input type="submit" value="更新信息" />
+            <input type="submit" onclick="success()" value="更新信息" />
+            <script>function success(){
+                alert("Success!");
+            }</script>
         </div>
     </form>
 </div>

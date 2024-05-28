@@ -18,7 +18,20 @@ public class Teacher extends People {
                 pinyinBuilder.append(c);
             }
         }
-        return pinyinBuilder.toString();
+        String nameF = pinyinBuilder.toString(); // 假设pinyinBuilder是一个StringBuilder对象
+        if (!nameF.isEmpty()) {
+            nameF = Character.toUpperCase(nameF.charAt(0)) + nameF.substring(1);
+        }
+        StringBuilder nameFWithSpaces = new StringBuilder(nameF);
+        for (int i = 0; i < nameFWithSpaces.length(); i++) {
+            if (Character.isDigit(nameFWithSpaces.charAt(i))) {
+                nameFWithSpaces.setCharAt(i, ' '); // 将数字替换为空格
+            }
+        }
+
+// 获取最终的字符串
+        String finalNameF = nameFWithSpaces.toString();
+        return finalNameF;
     }
 //    老师职位
     private String status;
