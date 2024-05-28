@@ -77,6 +77,8 @@ public class LoginServlet extends HttpServlet {
                             StudentImpl studentimpl=new StudentImpl();
                             Student student=studentimpl.getStudentById(id);
                             request.getSession().setAttribute("student", student);
+                            //request.getSession().setMaxInactiveInterval(30 * 60);//超时30min退出
+                            request.getSession().setMaxInactiveInterval(15);
                             handleStudentLogin(id,password,request,response);
                         }
                         else {

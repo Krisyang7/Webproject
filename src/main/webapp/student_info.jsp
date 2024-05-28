@@ -45,8 +45,20 @@
             margin: 10px 0;
         }
     </style>
+    <script type="text/javascript">
+        setTimeout(function() {
+            alert('Session超时，请重新登录。');
+            window.location.href = 'Login.jsp?message=session_timeout';
+        }, 30 * 60 * 1000); // 30 minutes in milliseconds  30 * 60 * 1000
+    </script>
 </head>
 <body>
+<%
+    if (session == null || session.getAttribute("student") == null) {
+        response.sendRedirect("Login.jsp?message=session_timeout");
+        return;
+    }
+%>
 <div class="top_bar">
     <a href="Login.jsp">退出登录</a>
 </div>
