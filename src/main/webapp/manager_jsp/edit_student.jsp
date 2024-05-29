@@ -45,7 +45,7 @@
             return;
         }
     %>
-    <form id="editForm" action="UpdateStudentServlet" method="post">
+    <form id="editForm" action="UpdateStudent_judgeServlet" method="post">
         <input type="hidden" name="student_id" value="<%= student.getId() %>" />
         <div class="form-input">
             <label>姓名:</label>
@@ -61,7 +61,7 @@
         </div>
         <div class="form-input">
             <label>学院:</label>
-            <input type="text" name="academy" value="<%= student.getCollege() %>" required />
+            <input type="text" name="college" value="<%= student.getCollege() %>" required />
         </div>
         <div class="form-input">
             <label>专业:</label>
