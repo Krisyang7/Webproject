@@ -11,4 +11,6 @@ public interface Manager_update extends Dao{
     void commit_update(HttpServletRequest request) throws SQLException;
 
     List<Update> get_commit() throws SQLException;
+
+    void whether_update(String action,String update_id) throws SQLException;
 }

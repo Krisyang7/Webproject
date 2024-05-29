@@ -102,4 +102,37 @@ public class Manager_updateImpl implements Manager_update {
 
         return  updates;
     }
+
+    @Override
+    public void whether_update(String action,String update_id) throws SQLException {
+        Connection conn=getConnection();
+        if(action.equals("approve")){
+            PreparedStatement ps1=conn.prepareStatement("select * from student_updates where update_id= ?");
+            ps1.setString(1,update_id);
+            ResultSet rs=ps1.executeQuery();
+            if(rs.next()){
+                String id=rs.getString("student_id");
+                String name=rs.getString("name");
+                String gender=rs.getString("gender");
+                String college=rs.getString("college");
+                String mentor=rs.getString("mentor");
+                String major=rs.getString("major");
+                String degree=rs.getString("degree");
+                PreparedStatement ps2=conn.prepareStatement("UPDATE students SET judgeing = 0,name= ?,gender= ?,college= ?,mentor= ?,major= ?,degree= ? WHERE student_id = ? ");
+                ps2.setString(1,name);
+                ps2.setString(2,gender);
+                ps2.setString(3,college);
+                ps2.setString(4,mentor);
+                ps2.setString(5,major);
+                ps2.setString(6,degree);
+                ps2.setString(7,id);
+                ps2.executeUpdate();
+                ps2.close();
+            }
+            rs.close();
+            ps1.close();
+        }
+        PreparedStatement ps=conn.prepareStatement("delete from student_updates where update_id="+update_id);
+        ps.executeUpdate();
+    }
 }
