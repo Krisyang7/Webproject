@@ -77,11 +77,10 @@ public class LoginServlet extends HttpServlet {
                             StudentImpl studentimpl=new StudentImpl();
                             Student student=studentimpl.getStudentById(id);
                             request.getSession().setAttribute("student", student);
-                            //request.getSession().setMaxInactiveInterval(30 * 60);//超时30min退出
-                            request.getSession().setMaxInactiveInterval(15);
+                            request.getSession().setMaxInactiveInterval(30 * 60);//超时30min退出
                             handleStudentLogin(id,password,request,response);
                         }
-                        else {
+                        else if(type.equals("1")){
 //                            Teacher teacher= new TeacherImpl().SelfQuary(id);
 //                            request.getSession().setAttribute("teacher",teacher);
                             if(id.equals(password)){
@@ -92,11 +91,15 @@ public class LoginServlet extends HttpServlet {
                                 RequestDispatcher dispatcher=request.getRequestDispatcher("teacher_info.jsp");
                                 dispatcher.forward(request,response);
                             }
+                        } else if (type.equals("2")) {  //学院管理员
+                            String college=resultSet.getString("college");
+                            request.getSession().setAttribute("college", college);
+                            RequestDispatcher dispatcher = request.getRequestDispatcher("/ManageStudentsServlet");
+                            dispatcher.forward(request, response);
                         }
                     }
                     else {
                         handleFailedLogin(userid,request,response);
-//                        response.sendRedirect("Login.jsp?login=false");
                     }
                 }
         } catch (SQLException e) {

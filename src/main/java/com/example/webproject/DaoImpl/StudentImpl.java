@@ -7,6 +7,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class StudentImpl implements StudentDao {
     @Override
     public Student getStudentById(String studentId) throws SQLException {
@@ -24,14 +27,15 @@ public class StudentImpl implements StudentDao {
                     rs.getString("address"),
                     rs.getString("nativePlace"),
                     rs.getString("phonenumber"),
-                    rs.getString("academy"),
+                    rs.getString("college"),
                     rs.getString("trainstart"),
                     rs.getString("trainend"),
                     rs.getString("policyStatus"),
                     rs.getString("marrystatus"),
                     rs.getString("mentor"),
                     rs.getString("major"),
-                    rs.getString("degree")
+                    rs.getString("degree"),
+                    rs.getString("judgeing")
             );
         }
         rs.close();
@@ -72,5 +76,39 @@ public class StudentImpl implements StudentDao {
             stmt.close();
             conn.close();
     }
+
+    public List<Student> search_college(String college) throws SQLException {
+        List<Student> students=new ArrayList<>();
+        Connection conn = getConnection();
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM students WHERE college = ?");
+        stmt.setString(1,college);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            Student student = new  Student(
+                    rs.getString("student_id"),
+                    rs.getString("name"),
+                    rs.getString("gender"),
+                    rs.getString("email"),
+                    rs.getString("address"),
+                    rs.getString("nativePlace"),
+                    rs.getString("phonenumber"),
+                    rs.getString("college"),
+                    rs.getString("trainstart"),
+                    rs.getString("trainend"),
+                    rs.getString("policyStatus"),
+                    rs.getString("marrystatus"),
+                    rs.getString("mentor"),
+                    rs.getString("major"),
+                    rs.getString("degree"),
+                    rs.getString("judgeing")
+            );
+            students.add(student);
+        }
+        rs.close();
+        stmt.close();
+        conn.close();
+        return students;
+    }
+
 
 }
