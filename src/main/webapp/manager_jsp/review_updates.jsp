@@ -26,18 +26,27 @@
             text-align: center;
             margin-bottom: 20px;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        .update-card {
+            border: 1px solid #ddd;
+            padding: 15px;
             margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #fff;
         }
-        th, td {
+        .update-card h2 {
+            margin-top: 0;
+        }
+        .update-details {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .update-details div {
+            flex: 1;
             padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+            box-sizing: border-box;
         }
-        th {
-            background-color: #f2f2f2;
+        .update-details div:nth-child(odd) {
+            background-color: #f9f9f9;
         }
         .highlight {
             background-color: #ff0;
@@ -63,6 +72,10 @@
         .btn-reject:hover {
             background-color: #c82333;
         }
+        .operation-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -75,69 +88,71 @@
     <p>没有待审核的更新记录。</p>
     <%
     } else {
+        for (Update update : updates) {
+            Student current = update.getOrigin();
     %>
-    <table>
-        <thead>
-        <tr>
-            <th>学生编号</th>
-            <th>字段</th>
-            <th>当前值</th>
-            <th>更新值</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <%
-            for (Update update : updates) {
-                Student current = update.getOrigin();
-        %>
-        <tr>
-            <td rowspan="7"><%= update.getId() %></td>
-            <td>姓名</td>
-            <td><%= current.getName() %></td>
-            <td class="<%= !update.getName().equals(current.getName()) ? "highlight" : "" %>"><%= update.getName() %></td>
-            <td rowspan="7">
-                <form action="ApproveUpdateServlet" method="post" style="display:inline;">
-                    <input type="hidden" name="update_id" value="<%= update.getUpdate_id() %>">
-                    <button type="submit" name="action" value="批准" class="btn">批准</button>
-                </form>
-                <form action="RejectUpdateServlet" method="post" style="display:inline;">
-                    <input type="hidden" name="update_id" value="<%= update.getUpdate_id() %>">
-                    <button type="submit" name="action" value="拒绝" class="btn btn-reject">拒绝</button>
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td>性别</td>
-            <td><%= current.getGender() %></td>
-            <td class="<%= !update.getGender().equals(current.getGender()) ? "highlight" : "" %>"><%= update.getGender() %></td>
-        </tr>
-        <tr>
-            <td>学院</td>
-            <td><%= current.getCollege() %></td>
-            <td class="<%= !update.getCollege().equals(current.getCollege()) ? "highlight" : "" %>"><%= update.getCollege() %></td>
-        </tr>
-        <tr>
-            <td>专业</td>
-            <td><%= current.getMajor() %></td>
-            <td class="<%= !update.getMajor().equals(current.getMajor()) ? "highlight" : "" %>"><%= update.getMajor() %></td>
-        </tr>
-        <tr>
-            <td>学位类型</td>
-            <td><%= current.getDegree() %></td>
-            <td class="<%= !update.getDegree().equals(current.getDegree()) ? "highlight" : "" %>"><%= update.getDegree() %></td>
-        </tr>
-        <tr>
-            <td>导师</td>
-            <td><%= current.getMentor() %></td>
-            <td class="<%= !update.getMentor().equals(current.getMentor()) ? "highlight" : "" %>"><%= update.getMentor() %></td>
-        </tr>
-        <%
-            }
-        %>
-        </tbody>
-    </table>
+    <div class="update-card">
+        <h2>更新记录 ID: <%= update.getUpdate_id() %></h2>
+        <div class="update-details">
+            <div>
+                <strong>学生编号:</strong> <%= update.getId() %>
+            </div>
+            <div>
+                <strong>姓名:</strong>
+                <span class="<%= !update.getName().equals(current.getName()) ? "highlight" : "" %>">
+                    <%= update.getName() %>
+                </span>
+                (当前值: <%= current.getName() %>)
+            </div>
+            <div>
+                <strong>性别:</strong>
+                <span class="<%= !update.getGender().equals(current.getGender()) ? "highlight" : "" %>">
+                    <%= update.getGender() %>
+                </span>
+                (当前值: <%= current.getGender() %>)
+            </div>
+            <div>
+                <strong>学院:</strong>
+                <span class="<%= !update.getCollege().equals(current.getCollege()) ? "highlight" : "" %>">
+                    <%= update.getCollege() %>
+                </span>
+                (当前值: <%= current.getCollege() %>)
+            </div>
+            <div>
+                <strong>专业:</strong>
+                <span class="<%= !update.getMajor().equals(current.getMajor()) ? "highlight" : "" %>">
+                    <%= update.getMajor() %>
+                </span>
+                (当前值: <%= current.getMajor() %>)
+            </div>
+            <div>
+                <strong>学位类型:</strong>
+                <span class="<%= !update.getDegree().equals(current.getDegree()) ? "highlight" : "" %>">
+                    <%= update.getDegree() %>
+                </span>
+                (当前值: <%= current.getDegree() %>)
+            </div>
+            <div>
+                <strong>导师:</strong>
+                <span class="<%= !update.getMentor().equals(current.getMentor()) ? "highlight" : "" %>">
+                    <%= update.getMentor() %>
+                </span>
+                (当前值: <%= current.getMentor() %>)
+            </div>
+        </div>
+        <div class="operation-buttons">
+            <form action="ReviewUpdateServlet" method="post" style="display: inline;">
+                <input type="hidden" name="updateId" value="<%= update.getUpdate_id() %>">
+                <button type="submit" name="action" value="approve" class="btn">批准</button>
+            </form>
+            <form action="ReviewUpdateServlet" method="post" style="display: inline;">
+                <input type="hidden" name="updateId" value="<%= update.getUpdate_id() %>">
+                <button type="submit" name="action" value="reject" class="btn btn-reject">拒绝</button>
+            </form>
+        </div>
+    </div>
     <%
+            }
         }
     %>
 </div>
