@@ -91,11 +91,17 @@ public class LoginServlet extends HttpServlet {
                                 RequestDispatcher dispatcher=request.getRequestDispatcher("teacher_info.jsp");
                                 dispatcher.forward(request,response);
                             }
-                        } else if (type.equals("2")) {  //学院管理员
+                        } else if (type.equals("2")) {  //学院研究生秘书、学院领导可以管理本学院所有研究生的学籍信息
                             String college=resultSet.getString("college");
                             request.getSession().setAttribute("college", college);
                             RequestDispatcher dispatcher = request.getRequestDispatcher("/ManageStudentsServlet");
                             dispatcher.forward(request, response);
+                        } else if (type.equals("3")) {//审核员 研究生院管理员可以管理全校的研究生学籍信息
+                            RequestDispatcher dispatcher = request.getRequestDispatcher("/ReviewUpdatesServlet");
+                            dispatcher.forward(request, response);
+                        }
+                        else if (type.equals("4")) {//研究生院领导、学校领导可以查询、查看全校的研究生学籍信息
+
                         }
                     }
                     else {
