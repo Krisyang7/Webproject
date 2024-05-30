@@ -18,7 +18,7 @@ public class People {
     protected String trainstart;//火车起始站
     protected String trainend;//火车终止站
     protected String policyStatus;//政治面貌
-    protected String marrystatus;//婚姻状况
+    protected String marryStatus;//婚姻状况
     protected String major;//专业
     // 添加无参构造函数
     public People() {
