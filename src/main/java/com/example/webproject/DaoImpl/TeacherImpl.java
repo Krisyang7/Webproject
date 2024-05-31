@@ -51,6 +51,37 @@ public class TeacherImpl implements TeacherDao {
         return list;
     }
 
+    public List<Teacher> QuaryTeacher(String id,String name,String college,String status ) throws SQLException {
+        String sql = "SELECT * FROM teacher " +
+                "WHERE " +
+                "    (teacher_id = ? OR ? = '') " + // 如果student_id参数为空字符串，则始终为真
+                "    AND (name LIKE CONCAT('%', ?, '%') OR ? = '') " + // 如果name参数为空字符串，则不应用过滤条件
+                "    AND (college LIKE CONCAT('%', ?, '%') OR ? = '') " +
+                "    AND (status=? or ?='')";
+        List<Teacher> list=new ArrayList<>();
+        Connection connection=getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1,id);
+        preparedStatement.setString(2,id);
+
+        preparedStatement.setString(3,name);
+        preparedStatement.setString(4,name);
+
+        preparedStatement.setString(5,college);
+        preparedStatement.setString(6,college);
+
+        preparedStatement.setString(7,status);
+        preparedStatement.setString(8,status);
+
+        ResultSet set = preparedStatement.executeQuery();
+        while (set.next()){
+            list.add(new Teacher(set.getString("teacher_id"),set.getString("name"),set.getString("nameSpell"),set.getString("gender"),set.getString("email"),set.getString("address"),set.getString("nativePlace"),set.getString("phonenumber"),set.getString("college"),set.getString("trainstart"),set.getString("trainend"),set.getString("policyStatus"),set.getString("marrystatus"),set.getString("status")));
+        }
+        return list;
+    }
+
+
+
     @Override
     public Teacher SelfQuary(String id) throws SQLException {
         Connection connection = getConnection();

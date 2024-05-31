@@ -229,6 +229,22 @@
 
             </form>
 
+            <table border="1">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>姓名</th>
+                    <th>学院</th>
+                    <th>详细信息</th>
+                </tr>
+                </thead>
+                <tbody id="teacherTableBody">
+                </tbody>
+            </table>
+            <%--            详细信息显示--%>
+            <div id='teacherDataContainer'>
+                <button class="close-btn" onclick="hideCanvas()"></button>
+            </div>
         </div>
         </div>
 </body>

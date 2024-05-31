@@ -10,6 +10,7 @@ public interface TeacherDao extends Dao {
     List<Student> QuaryStudent(String id,String name,String mentor,String nativrPlace,String college,String major ) throws SQLException;
     Teacher SelfQuary(String id) throws SQLException;
     void updateTeacherPhoneNumber(String teacherId, String newPhoneNumber) throws SQLException;
+    List<Teacher> QuaryTeacher(String id,String name,String college,String status ) throws SQLException;
 
     // Method to update a student's email address
     void updateTeacherEmail(String teacherId, String newEmail) throws SQLException;

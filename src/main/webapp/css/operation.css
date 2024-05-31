@@ -244,3 +244,74 @@ input[type="text"]::-ms-clear {
 #studentDataContainer .close-btn::after {
     content: '×'; /* 使用Unicode字符或字体图标 */
 }
+
+
+
+.teacherdatabutton {
+    /* 外观 */
+    display: inline-block; /* 使得button可以在文本中像内联元素一样流动 */
+    padding: 10px 20px; /* 内边距，增加点击区域的大小 */
+    font-size: 16px; /* 字体大小 */
+    font-weight: bold; /* 字体加粗 */
+    color: #ffffff; /* 文本颜色 */
+    background-color: #007BFF; /* 背景颜色，这里使用了类似于Bootstrap的蓝色 */
+    border: none; /* 去除边框 */
+    border-radius: 5px; /* 圆角 */
+    cursor: pointer; /* 鼠标悬停时变为小手形状 */
+    transition: background-color 0.3s ease; /* 背景颜色过渡效果 */
+
+    /* 盒模型相关 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    text-decoration: none; /* 去除下划线 */
+    text-align: center; /* 文本居中 */
+    line-height: 1.5; /* 行高，使文本在按钮中垂直居中 */
+
+    /* 响应式布局相关 */
+    width: 100%; /* 在父元素（如td）中占据全部宽度 */
+    max-width: 200px; /* 最大宽度，防止按钮过大 */
+    overflow: hidden; /* 如果文本过长，则隐藏超出部分 */
+    white-space: nowrap; /* 防止文本换行 */
+    text-overflow: ellipsis; /* 如果文本过长，则显示省略号 */
+
+    /* 交互效果 */
+    .studentdatabutton:hover { /* 当鼠标悬停在按钮上时 */
+        background-color: #0056b3; /* 背景颜色变深 */
+    }
+
+    .studentdatabutton:active { /* 当按钮被按下时 */
+        transform: scale(0.98); /* 缩小一点，增加按下效果 */
+    }
+}
+
+#teacherDataContainer {
+    width: 500px;
+    height: 650px;
+    background-color: powderblue; /* 红色背景 */
+    border: 2px solid #000000; /* 黑色边框 */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 1000;
+    /* 添加一些过渡效果，使显示和隐藏更平滑，但注意opacity过渡不适用于display属性 */
+    /* 如果你想让容器淡入淡出，可能需要使用其他方法，如使用JavaScript来改变opacity和visibility */
+}
+
+#teacherDataContainer .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #FFFFFF;
+    background-color: #000000; /* 黑色背景 */
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* 隐藏关闭按钮的文本（可选，如果你使用图标） */
+#teacherDataContainer .close-btn::after {
+    content: '×'; /* 使用Unicode字符或字体图标 */
+}
