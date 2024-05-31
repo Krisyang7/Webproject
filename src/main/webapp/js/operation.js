@@ -1,16 +1,4 @@
-function showContent(targetId) {
-    // 隐藏所有的center_bar
-    var centerBars = document.getElementsByClassName('center_bar');
-    for (var i = 0; i < centerBars.length; i++) {
-        centerBars[i].style.display = 'none';
-    }
 
-    // 显示指定的center_bar
-    var target = document.getElementById(targetId);
-    if (target) {
-        target.style.display = 'block';
-    }
-}
 function submitForm(event) {
     event.preventDefault(); // 阻止默认的表单提交行为
 
@@ -270,6 +258,42 @@ function submitForm(event) {
             displayStudents(0, studentsPerPage);
 
         })
+}
+function TeachersubmitForm(event){
+    event.preventDefault();
+    var formData = {};
+
+    // 获取并设置表单数据
+    formData.teacher_id = document.getElementById('teacher_id').value;
+    formData.Tname = document.getElementById('Tname').value;
+    formData.Tcollege = document.getElementById('Tcollege').value;
+    formData.status= document.getElementById('status').value;
+
+    // 将对象转换为 JSON 字符串
+    var jsonData = JSON.stringify(formData);
+
+    // 使用 Fetch API 发送 POST 请求，但不处理响应
+    // 假设 jsonData 是一个 JavaScript 对象，我们需要将其转换为 JSON 字符串
+    fetch('SearchStudents.do', { // 替换为您的服务器端点
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // 设置请求头为 application/json
+        },
+        body: jsonData // 发送 JSON 字符串
+    })
+}
+function showContent(targetId) {
+    // 隐藏所有的center_bar
+    var centerBars = document.getElementsByClassName('center_bar');
+    for (var i = 0; i < centerBars.length; i++) {
+        centerBars[i].style.display = 'none';
+    }
+
+    // 显示指定的center_bar
+    var target = document.getElementById(targetId);
+    if (target) {
+        target.style.display = 'block';
+    }
 }
 function hideCanvas() {
     var container = document.getElementById('studentDataContainer');
