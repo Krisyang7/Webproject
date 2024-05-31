@@ -315,3 +315,38 @@ input[type="text"]::-ms-clear {
 #teacherDataContainer .close-btn::after {
     content: '×'; /* 使用Unicode字符或字体图标 */
 }
+
+
+
+#MentorDetail {
+    width: 500px;
+    height: 650px;
+    background-color: powderblue; /* 红色背景 */
+    border: 2px solid #000000; /* 黑色边框 */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 1000;
+    /* 添加一些过渡效果，使显示和隐藏更平滑，但注意opacity过渡不适用于display属性 */
+    /* 如果你想让容器淡入淡出，可能需要使用其他方法，如使用JavaScript来改变opacity和visibility */
+}
+
+#MentorDetail .close-btn{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #FFFFFF;
+    background-color: #000000; /* 黑色背景 */
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* 隐藏关闭按钮的文本（可选，如果你使用图标） */
+#MentorDetail .close-btn::after {
+    content: '×'; /* 使用Unicode字符或字体图标 */
+}

@@ -103,7 +103,10 @@ public class LoginServlet extends HttpServlet {
                         dispatcher.forward(request, response);
                     }
                     else if (type.equals("4")) {//研究生院领导、学校领导可以查询、查看全校的研究生学籍信息
-
+                        Teacher teacher=new TeacherImpl().SelfQuary(id);
+                        request.getSession().setAttribute("teacher",teacher);
+                        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/mentor.jsp");
+                        requestDispatcher.forward(request,response);
                     }
                 }
                 else {

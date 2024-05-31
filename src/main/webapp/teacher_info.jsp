@@ -243,7 +243,6 @@
             </table>
             <%--            详细信息显示--%>
             <div id='teacherDataContainer'>
-                <button class="close-btn" onclick="hideCanvas()"></button>
             </div>
         </div>
         </div>

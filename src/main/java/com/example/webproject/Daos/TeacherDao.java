@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface TeacherDao extends Dao {
+    List<Student>MentorQuary(String id);
     List<Student> QuaryStudent(String id,String name,String mentor,String nativrPlace,String college,String major ) throws SQLException;
     Teacher SelfQuary(String id) throws SQLException;
     void updateTeacherPhoneNumber(String teacherId, String newPhoneNumber) throws SQLException;

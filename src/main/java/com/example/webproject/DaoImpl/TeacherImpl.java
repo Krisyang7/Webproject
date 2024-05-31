@@ -14,6 +14,25 @@ import java.util.List;
 public class TeacherImpl implements TeacherDao {
 
     @Override
+    public List<Student> MentorQuary(String id) {
+        String sql="select * from students where mentor=?";
+        List<Student> list=new ArrayList<>();
+
+        try {
+            Connection connection=getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,id);
+            ResultSet set = preparedStatement.executeQuery();
+            while (set.next()){
+                list.add(new Student(set.getString("student_id"),set.getString("name"),set.getString("gender"),set.getString("email"),set.getString("address"),set.getString("nativePlace"),set.getString("phonenumber"),set.getString("college"),set.getString("trainstart"),set.getString("trainend"),set.getString("policyStatus"),set.getString("marrystatus"),set.getString("mentor"),set.getString("major"),set.getString("degree")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+
+    @Override
     public List<Student> QuaryStudent(String id,String name,String mentor,String nativePlace,String college,String major ) throws SQLException {
         String sql = "SELECT * FROM students " +
                 "WHERE " +
