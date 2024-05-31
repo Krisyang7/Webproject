@@ -49,57 +49,67 @@ public class LoginServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-            String userid = request.getParameter("id");
-            String password = request.getParameter("password");
-            String sql = "select * from login where login.id=? and login.password=?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setString(1, userid);
-                preparedStatement.setString(2, password);
-                if (new LoginDaoImpl().isAccountLocked(userid)) {
-                    System.out.println("锁定");
-                    response.sendRedirect("Login.jsp?locked=true");
-                    return;
-                }
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        String type=resultSet.getString("type");
-                        String id=resultSet.getString("id");
-                        request.getSession().setAttribute("id",id);
+        String userid = request.getParameter("id");
+        String password = request.getParameter("password");
+        String sql = "select * from login where login.id=? and login.password=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, userid);
+            preparedStatement.setString(2, password);
+            if (new LoginDaoImpl().isAccountLocked(userid)) {
+                System.out.println("锁定");
+                response.sendRedirect("Login.jsp?locked=true");
+                return;
+            }
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    String type=resultSet.getString("type");
+                    String id=resultSet.getString("id");
+                    request.getSession().setAttribute("id",id);
 
-                        new LoginDaoImpl().resetFailedLoginAttempts(id);
-                        //密码过期
-                        if (isPasswordChangeRequired(resultSet.getDate("lastPasswordChangeDate"))) {
-                            RequestDispatcher dispatcher = request.getRequestDispatcher("change_password.jsp?overday=true");
-                            dispatcher.forward(request, response);
-                            return;
-                        }
+                    new LoginDaoImpl().resetFailedLoginAttempts(id);
+                    //密码过期
+                    if (isPasswordChangeRequired(resultSet.getDate("lastPasswordChangeDate"))) {
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("change_password.jsp?overday=true");
+                        dispatcher.forward(request, response);
+                        return;
+                    }
 
-                        if (type.equals("0")){
-                            StudentImpl studentimpl=new StudentImpl();
-                            Student student=studentimpl.getStudentById(id);
-                            request.getSession().setAttribute("student", student);
-                            //request.getSession().setMaxInactiveInterval(30 * 60);//超时30min退出
-                            request.getSession().setMaxInactiveInterval(15);
-                            handleStudentLogin(id,password,request,response);
-                        }
-                        else {
+                    if (type.equals("0")){
+                        StudentImpl studentimpl=new StudentImpl();
+                        Student student=studentimpl.getStudentById(id);
+                        request.getSession().setAttribute("student", student);
+                        request.getSession().setMaxInactiveInterval(30 * 60);//超时30min退出
+                        handleStudentLogin(id,password,request,response);
+                    }
+//                    //研究生院领导、学校领导可以查询、查看全校的研究生学籍信息
+                    else if(type.equals("1")){
                             Teacher teacher= new TeacherImpl().SelfQuary(id);
                             request.getSession().setAttribute("teacher",teacher);
-                            if(id.equals(password)){
-                                RequestDispatcher dispatcher = request.getRequestDispatcher("change_password.jsp");
-                                dispatcher.forward(request, response);
-                            }
-                            else {
-                                RequestDispatcher dispatcher=request.getRequestDispatcher("teacher_info.jsp");
-                                dispatcher.forward(request,response);
-                            }
+                        if(id.equals(password)){
+                            RequestDispatcher dispatcher = request.getRequestDispatcher("change_password.jsp");
+                            dispatcher.forward(request, response);
                         }
+                        else {
+                            RequestDispatcher dispatcher=request.getRequestDispatcher("teacher_info.jsp");
+                            dispatcher.forward(request,response);
+                        }
+                    } else if (type.equals("2")) {  //学院研究生秘书、学院领导可以管理本学院所有研究生的学籍信息
+                        String college=resultSet.getString("college");
+                        request.getSession().setAttribute("college", college);
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("/ManageStudentsServlet");
+                        dispatcher.forward(request, response);
+                    } else if (type.equals("3")) {//审核员 研究生院管理员可以管理全校的研究生学籍信息
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("/ReviewUpdatesServlet");
+                        dispatcher.forward(request, response);
                     }
-                    else {
-                        handleFailedLogin(userid,request,response);
-//                        response.sendRedirect("Login.jsp?login=false");
+                    else if (type.equals("4")) {//研究生院领导、学校领导可以查询、查看全校的研究生学籍信息
+
                     }
                 }
+                else {
+                    handleFailedLogin(userid,request,response);
+                }
+            }
         } catch (SQLException e) {
             throw new ServletException("Error in database operation", e);
         }
@@ -158,5 +168,3 @@ public class LoginServlet extends HttpServlet {
 
 
 }
-
-

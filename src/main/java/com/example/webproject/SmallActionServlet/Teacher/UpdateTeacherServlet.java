@@ -1,4 +1,4 @@
-package com.example.webproject.SmallActionServlet;
+package com.example.webproject.SmallActionServlet.Teacher;
 
 import com.example.webproject.Bean.Teacher;
 import com.example.webproject.DaoImpl.TeacherImpl;

@@ -1,4 +1,4 @@
-package com.example.webproject.SmallActionServlet;
+package com.example.webproject.SmallActionServlet.student;
 
 //import jakarta.servlet.annotation.WebServlet;
 //import jakarta.servlet.RequestDispatcher;

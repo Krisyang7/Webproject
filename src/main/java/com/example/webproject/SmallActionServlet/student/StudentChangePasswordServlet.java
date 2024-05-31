@@ -1,4 +1,4 @@
-package com.example.webproject.SmallActionServlet;
+package com.example.webproject.SmallActionServlet.student;
 
 import com.example.webproject.DaoImpl.LoginDaoImpl;
 import jakarta.servlet.ServletException;

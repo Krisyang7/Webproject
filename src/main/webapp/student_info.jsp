@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Student Information</title>
-    <link rel="stylesheet" href="operation.css">
+    <link rel="stylesheet" href="css/operation.css">
     <style>
         body {
             font-family: Arial, sans-serif;

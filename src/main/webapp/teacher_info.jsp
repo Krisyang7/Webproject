@@ -6,7 +6,7 @@
 <head>
     <title>Teacher_info</title>
     <script src="js/operation.js"></script>
-    <link rel="stylesheet" href="operation.css">
+    <link rel="stylesheet" href="css/operation.css">
 </head>
 <body>
     <div class="top_bar">
@@ -16,7 +16,7 @@
     <div class="container">
         <div class="side_bar">
             <div class="side_bar_button" onclick="showContent('table3')">学生信息查询</div>
-            <div class="side_bar_button">学生信息更改</div>
+            <div class="side_bar_button" onclick="showContent('table4')">教师信息查询</div>
             <div class="side_bar_button" onclick="showContent('table2')">个人信息更改</div>
             <div class="side_bar_button" onclick="showContent('table1')">个人信息查询</div>
             <h1>${teacher.id}</h1>
@@ -206,7 +206,30 @@
 
             </div>
 
-<%----%>
+<%--        教师信息查询--%>
+        <div class="center_bar" id="table4">
+            <form action="SearchTeacher.do" method="post">
+                <h1>教师信息查询</h1>
+                <label for="teacher_id" class="first_label">教师编号:</label>
+                <input type="text" id="teacher_id" placeholder="请输入教师编号" name="teacher_id" >
+
+                <label for="Tname">姓名:</label>
+                <input type="text" id="Tname" placeholder="请输入姓名" name="Tname" >
+
+                <label for="Tcollege">学院:</label>
+                <input type="text" id="Tcollege" placeholder="请输入学院" name="Tcollege">
+
+                <label for="status">职务:</label>
+                <input type="text" id="status" name="status" placeholder="请输入专业" ><br><br>
+
+                <div class="button-container">
+                    <input type="submit" value="提交" onclick="TeachersubmitForm(event,'table3')">
+                    <input type="reset" value="重置">
+                </div>
+
+            </form>
+
+        </div>
         </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.example.webproject.SmallActionServlet;
+package com.example.webproject.SmallActionServlet.Teacher;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
