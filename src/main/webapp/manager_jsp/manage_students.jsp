@@ -50,7 +50,7 @@
 </head>
 <body>
 <div class="top_bar">
-    <a href="logout.jsp">退出登录</a>
+    <a href="Login.jsp">退出登录</a>
 </div>
 <div class="container">
     <h1>学生信息管理</h1>
@@ -64,13 +64,15 @@
             <th>专业</th>
             <th>学位类型</th>
             <th>导师</th>
+            <th>审核状态</th>
             <th>操作</th>
         </tr>
         </thead>
         <tbody>
         <%
             List<Student> students = (List<Student>) request.getAttribute("students");
-            for (Student student : students) {
+            if (students != null) {
+                for (Student student : students) {
         %>
         <tr>
             <td><%= student.getName() %></td>
@@ -80,14 +82,16 @@
             <td><%= student.getMajor() %></td>
             <td><%= student.getDegree() %></td>
             <td><%= student.getMentor() %></td>
+            <td><%= student.getJudgeing() .equals("1") ? "审核中" : "已审核" %></td>
             <td>
-                <form action="edit_student.jsp" method="get" style="display:inline;">
+                <form action="EditStudentServlet" method="get" style="display:inline;">
                     <input type="hidden" name="student_id" value="<%= student.getId() %>">
                     <input type="submit" value="编辑">
                 </form>
             </td>
         </tr>
         <%
+                }
             }
         %>
         </tbody>

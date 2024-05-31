@@ -29,6 +29,10 @@
             margin: 5px 0;
             box-sizing: border-box;
         }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
     </style>
 </head>
 <body>
@@ -36,8 +40,12 @@
     <h1>编辑学生信息</h1>
     <%
         Student student = (Student) request.getAttribute("student");
+        if (student == null) {
+            response.sendRedirect("manage_students.jsp?error=StudentNotFound");
+            return;
+        }
     %>
-    <form action="UpdateStudentServlet" method="post">
+    <form id="editForm" action="UpdateStudent_judgeServlet" method="post">
         <input type="hidden" name="student_id" value="<%= student.getId() %>" />
         <div class="form-input">
             <label>姓名:</label>
@@ -53,7 +61,7 @@
         </div>
         <div class="form-input">
             <label>学院:</label>
-            <input type="text" name="academy" value="<%= student.getCollege() %>" required />
+            <input type="text" name="college" value="<%= student.getCollege() %>" required />
         </div>
         <div class="form-input">
             <label>专业:</label>
@@ -67,10 +75,19 @@
             <label>导师:</label>
             <input type="text" name="mentor" value="<%= student.getMentor() %>" required />
         </div>
-        <div class="form-input">
+        <div class="form-input buttons">
             <input type="submit" value="提交修改" />
+            <button type="button" onclick="returnToManage()">返回</button>
         </div>
     </form>
+    <script>
+        function returnToManage() {
+            // Change form action to ReturnToManageServlet and submit
+            document.getElementById('editForm').action = 'ManageStudentsServlet';
+            document.getElementById('editForm').method = 'post';
+            document.getElementById('editForm').submit();
+        }
+    </script>
 </div>
 </body>
 </html>

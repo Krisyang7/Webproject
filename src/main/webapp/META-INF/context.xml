@@ -15,7 +15,7 @@
 <!--<Context reloadable="true">-->
 <!--<Resource-->
 <!--        name="jdbc/wwtweb"-->
-<!--        type="javax.sql.DataSource"-->
+<!--        type="jakarta.sql.DataSource"-->
 <!--        maxTotal="50"-->
 <!--        maxIdle="50"-->
 <!--        driverClassName="com.mysql.cj.jdbc.Driver"-->
