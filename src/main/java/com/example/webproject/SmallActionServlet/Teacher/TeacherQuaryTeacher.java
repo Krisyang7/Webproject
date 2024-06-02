@@ -28,20 +28,17 @@ public class TeacherQuaryTeacher extends HttpServlet {
         req.setCharacterEncoding("utf-8");
         resp.setCharacterEncoding("utf-8");
         resp.setContentType("text/html;charset=UTF-8");
-
+        TeacherImpl teacher=new TeacherImpl();
         InputStreamReader reader = new InputStreamReader((ServletInputStream) req.getInputStream());
 
-        JSONArray list = JsonUtils.getJsonArrayFromObject(reader);
-
-        for (int i = 0; i < list.size(); i++) {
-            JSONObject object = (JSONObject) list.get(i);
+        JSONObject object = JsonUtils.getJsonArrayFromObject(reader);
             String id=object.getString("teacher_id");
             String name=object.getString("Tname");
             String college=object.getString("Tcollege");
             String stasus=object.getString("status");
-            TeacherImpl teacher=new TeacherImpl();
+            Teacher teacher1=(Teacher) req.getSession().getAttribute("teacher");
             try {
-                List<Teacher> teacherList = teacher.QuaryTeacher(id, name,college, stasus);
+                List<Teacher> teacherList = teacher.QuaryTeacher(teacher1.getId(),id, name,college, stasus);
                 ObjectMapper mapper = new ObjectMapper(); // ObjectMapper是Jackson库中的类
                 String jsonString = null;
                 try {
@@ -63,5 +60,4 @@ public class TeacherQuaryTeacher extends HttpServlet {
             }
         }
     }
-}
 

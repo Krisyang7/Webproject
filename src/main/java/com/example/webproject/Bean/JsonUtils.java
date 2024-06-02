@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 
 public class JsonUtils {
 
-    public static JSONArray getJsonArrayFromObject(InputStreamReader reader) throws IOException {
+    public static JSONObject getJsonArrayFromObject(InputStreamReader reader) throws IOException {
         BufferedReader br = new BufferedReader(reader);
         StringBuilder sb = new StringBuilder();
 
@@ -20,10 +20,11 @@ public class JsonUtils {
 
         try {
             JSONObject jsonObject = JSONObject.parseObject(sb.toString());
+            return jsonObject;
             // 创建一个只包含这个对象的JSONArray
-            JSONArray jsonArray = new JSONArray();
-            jsonArray.add(jsonObject);
-            return jsonArray;
+//            JSONArray jsonArray = new JSONArray();
+//            jsonArray.add(jsonObject);
+            //return jsonArray;
         } catch (Exception e) {
             e.printStackTrace();
             // 可以在这里添加更具体的错误处理逻辑

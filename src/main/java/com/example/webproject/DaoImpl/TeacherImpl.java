@@ -8,10 +8,30 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TeacherImpl implements TeacherDao {
+
+    public void SetDiary(String name,String sql){
+        try {
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDateTime = currentDateTime.format(formatter);
+            String s="insert into diary values (?,?,?)";
+            Connection connection=getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(s);
+            preparedStatement.setString(1,name);
+            preparedStatement.setString(3,formattedDateTime);
+            preparedStatement.setString(2,sql);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
     @Override
     public List<Student> MentorQuary(String id) {
@@ -26,6 +46,9 @@ public class TeacherImpl implements TeacherDao {
             while (set.next()){
                 list.add(new Student(set.getString("student_id"),set.getString("name"),set.getString("gender"),set.getString("email"),set.getString("address"),set.getString("nativePlace"),set.getString("phonenumber"),set.getString("college"),set.getString("trainstart"),set.getString("trainend"),set.getString("policyStatus"),set.getString("marrystatus"),set.getString("mentor"),set.getString("major"),set.getString("degree")));
             }
+            TeacherImpl teacher=new TeacherImpl();
+            String diary="MentorQuary where mentor="+id;
+            teacher.SetDiary(id,diary);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -33,7 +56,7 @@ public class TeacherImpl implements TeacherDao {
     }
 
     @Override
-    public List<Student> QuaryStudent(String id,String name,String mentor,String nativePlace,String college,String major ) throws SQLException {
+    public List<Student> QuaryStudent(String oid,String id,String name,String mentor,String nativePlace,String college,String major ) throws SQLException {
         String sql = "SELECT * FROM students " +
                 "WHERE " +
                 "    (student_id = ? OR ? = '') " + // 如果student_id参数为空字符串，则始终为真
@@ -67,10 +90,13 @@ public class TeacherImpl implements TeacherDao {
         while (set.next()){
             list.add(new Student(set.getString("student_id"),set.getString("name"),set.getString("gender"),set.getString("email"),set.getString("address"),set.getString("nativePlace"),set.getString("phonenumber"),set.getString("college"),set.getString("trainstart"),set.getString("trainend"),set.getString("policyStatus"),set.getString("marrystatus"),set.getString("mentor"),set.getString("major"),set.getString("degree")));
         }
+        TeacherImpl teacher=new TeacherImpl();
+        String sqla="Select * from students where id="+id+" and name="+name+" and mentor"+mentor+" and nativePlace"+nativePlace+" and college"+college+" and major"+major;
+        teacher.SetDiary(oid,sqla);
         return list;
     }
 
-    public List<Teacher> QuaryTeacher(String id,String name,String college,String status ) throws SQLException {
+    public List<Teacher> QuaryTeacher(String oid,String id,String name,String college,String status ) throws SQLException {
         String sql = "SELECT * FROM teacher " +
                 "WHERE " +
                 "    (teacher_id = ? OR ? = '') " + // 如果student_id参数为空字符串，则始终为真
@@ -96,6 +122,9 @@ public class TeacherImpl implements TeacherDao {
         while (set.next()){
             list.add(new Teacher(set.getString("teacher_id"),set.getString("name"),set.getString("nameSpell"),set.getString("gender"),set.getString("email"),set.getString("address"),set.getString("nativePlace"),set.getString("phonenumber"),set.getString("college"),set.getString("trainstart"),set.getString("trainend"),set.getString("policyStatus"),set.getString("marrystatus"),set.getString("status")));
         }
+        TeacherImpl teacher=new TeacherImpl();
+        String diary="select * from teacher where id="+id+" and name="+name+" and college="+college+" and status"+status;
+        teacher.SetDiary(oid,diary);
         return list;
     }
 
@@ -127,6 +156,8 @@ public class TeacherImpl implements TeacherDao {
                     set.getString("status")
             );
         }
+        TeacherImpl teacher=new TeacherImpl();
+        teacher.SetDiary(id,"SelfQuary");
         return null;
     }
 

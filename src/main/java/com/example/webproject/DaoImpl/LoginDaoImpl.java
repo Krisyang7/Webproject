@@ -4,9 +4,29 @@ import com.example.webproject.Bean.Student;
 import com.example.webproject.Daos.LoginDao;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class LoginDaoImpl implements LoginDao {
+    public void SetDiary(String name,String sql){
+        try {
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDateTime = currentDateTime.format(formatter);
+            String s="insert into diary values (?,?,?)";
+            Connection connection=getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(s);
+            preparedStatement.setString(1,name);
+            preparedStatement.setString(3,formattedDateTime);
+            preparedStatement.setString(2,sql);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     @Override
     public void UpdatePassword(String id,String password) throws SQLException {
         Connection conn = getConnection();
@@ -19,6 +39,9 @@ public class LoginDaoImpl implements LoginDao {
         stmt.executeUpdate();
         stmt.close();
         conn.close();
+        LoginDaoImpl loginDao=new LoginDaoImpl();
+        String dairy="update password="+password;
+        loginDao.SetDiary(id,dairy);
     }
 
     @Override

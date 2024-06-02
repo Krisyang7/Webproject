@@ -30,13 +30,31 @@ public class UpdateTeacherServlet extends HttpServlet {
         String trainend = req.getParameter("trainend");
         try {
             TeacherImpl teacher=new TeacherImpl();
-            teacher.updateTeacherAddress(id,address);
-            teacher.updateTeacherEmail(id,email);
-            teacher.updateTeacherPhoneNumber(id,phonenumber);
-            teacher.updateTeacherTrainStart(id,trainstart);
-            teacher.updateTeacherTrainEnd(id,trainend);
+            String diary="Update Self";
+            if (!address.equals(teacher1.getAddress())){
+                teacher.updateTeacherAddress(id,address);
+                diary+=" address:"+address;
+            }
+            if (!email.equals(teacher1.getEmail())){
+                teacher.updateTeacherEmail(id,email);
+                diary+=" email:"+email;
+            }
+            if (!teacher1.getPhonenumber().equals(phonenumber)){
+                teacher.updateTeacherPhoneNumber(id,phonenumber);
+                diary+=" phonenumber:"+phonenumber;
+            }
+            if (!trainstart.equals(teacher1.getTrainstart())){
+                teacher.updateTeacherTrainStart(id,trainstart);
+                diary+=" trainstart:"+trainstart;
+            }
+            if (!trainend.equals(teacher1.getTrainend())){
+                teacher.updateTeacherTrainEnd(id,trainend);
+                diary+=" trainend:"+trainend;
+            }
+
             teacher1=teacher.SelfQuary(id);
             req.getSession().setAttribute("teacher" ,teacher1);
+            teacher.SetDiary(teacher1.getId(),diary);
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("teacher_info.jsp");
             requestDispatcher.forward(req,resp);
         } catch (SQLException e) {
