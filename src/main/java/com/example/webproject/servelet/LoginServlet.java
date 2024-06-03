@@ -5,17 +5,16 @@ import com.example.webproject.Bean.Student;
 import com.example.webproject.Bean.Teacher;
 import com.example.webproject.DaoImpl.LoginDaoImpl;
 import com.example.webproject.DaoImpl.StudentImpl;
-//import com.example.webproject.DaoImpl.TeacherImpl;
 import com.example.webproject.DaoImpl.TeacherImpl;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
@@ -23,8 +22,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-
-@WebServlet(name = "LoginServlet", urlPatterns = "/login.do")
+@WebServlet("/login.do")
+//@WebServlet(name = "LoginServlet", urlPatterns = "/login.do")
 public class LoginServlet extends HttpServlet {
 
     DataSource dataSource;
@@ -34,7 +33,7 @@ public class LoginServlet extends HttpServlet {
     public void init() throws ServletException {
         try {
             Context context = new InitialContext();
-            dataSource = (DataSource) context.lookup("java:comp/env/jdbc/ybcweb");
+            dataSource = (DataSource) context.lookup("java:comp/env/jdbc/wwtweb");
         } catch (Exception e) {
             throw new ServletException("Error initializing data source", e);
         }
@@ -96,10 +95,12 @@ public class LoginServlet extends HttpServlet {
                     } else if (type.equals("2")) {  //学院研究生秘书、学院领导可以管理本学院所有研究生的学籍信息
                         String college=resultSet.getString("college");
                         request.getSession().setAttribute("college", college);
+                        request.getSession().setAttribute("id",id);
                         RequestDispatcher dispatcher = request.getRequestDispatcher("/ManageStudentsServlet");
                         dispatcher.forward(request, response);
                     } else if (type.equals("3")) {//审核员 研究生院管理员可以管理全校的研究生学籍信息
                         RequestDispatcher dispatcher = request.getRequestDispatcher("/ReviewUpdatesServlet");
+                        request.getSession().setAttribute("id",id);
                         dispatcher.forward(request, response);
                     }
                     else if (type.equals("4")) {//研究生院领导、学校领导可以查询、查看全校的研究生学籍信息

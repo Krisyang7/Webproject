@@ -121,7 +121,7 @@
             </tr>
             <tr>
                 <td><b>婚姻情况:</b></td>
-                <td>${student.marrystatus}</td>
+                <td>${student.marryStatus}</td>
             </tr>
         </table>
         <div>

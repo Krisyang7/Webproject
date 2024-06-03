@@ -39,6 +39,8 @@ public class StudentChangePasswordServlet extends HttpServlet {
 
         // 密码修改成功，执行更新操作
         try {
+            StudentImpl stuimp=new StudentImpl();
+            stuimp.SetDiary(id,"修改密码");
             loginDao.UpdatePassword(id, newPassword);
         } catch (SQLException e) {
             throw new RuntimeException(e);

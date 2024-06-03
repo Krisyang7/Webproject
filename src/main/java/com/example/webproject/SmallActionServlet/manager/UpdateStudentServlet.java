@@ -20,6 +20,7 @@ public class UpdateStudentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Manager_updateImpl managerUpdate=new Manager_updateImpl();
         try {
+            managerUpdate.SetDiary((String) request.getSession().getAttribute("id"),"管理员提交审核信息");
             managerUpdate.commit_update(request);
         } catch (SQLException e) {
             throw new RuntimeException(e);

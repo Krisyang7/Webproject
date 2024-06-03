@@ -20,6 +20,10 @@ public class WhetherUPdate extends HttpServlet {
         Manager_updateImpl managerUpdate=new Manager_updateImpl();
 
         try {
+            if(action.equals("approve"))
+                managerUpdate.SetDiary((String) request.getSession().getAttribute("id"),"批准审核请求");
+            else
+                managerUpdate.SetDiary((String) request.getSession().getAttribute("id"),"驳回审核请求");
             managerUpdate.whether_update(action,updateId);
         } catch (SQLException e) {
             throw new RuntimeException(e);

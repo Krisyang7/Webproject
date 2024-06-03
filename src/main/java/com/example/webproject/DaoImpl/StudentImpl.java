@@ -7,10 +7,30 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StudentImpl implements StudentDao {
+
+    public void SetDiary(String name,String sql){
+        try {
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDateTime = currentDateTime.format(formatter);
+            String s="insert into diary values (?,?,?)";
+            Connection connection=getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(s);
+            preparedStatement.setString(1,name);
+            preparedStatement.setString(3,formattedDateTime);
+            preparedStatement.setString(2,sql);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
     @Override
     public Student getStudentById(String studentId) throws SQLException {
         Connection conn = getConnection();

@@ -36,6 +36,7 @@ public class StudentUpdateServlet extends HttpServlet {
             studentimpl.updateStudentTraining(id,trainStart,trainEnd);
 
             Student updatedStudent = studentimpl.getStudentById(id);
+            studentimpl.SetDiary(id,"学生更新电话、邮箱、火车站起始位置");
             request.setAttribute("student", updatedStudent);
             RequestDispatcher requestDispatcher= request.getRequestDispatcher("student_info.jsp");
             requestDispatcher.forward(request,resp);
