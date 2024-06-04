@@ -108,6 +108,12 @@ public class LoginServlet extends HttpServlet {
                         request.getSession().setAttribute("teacher",teacher);
                         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/mentor.jsp");
                         requestDispatcher.forward(request,response);
+                    } else if (type.equals("5")) {//审计管理员只允许查看系统的日志信息
+                        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ViewLogsServlet");
+                        requestDispatcher.forward(request,response);
+                    } else if (type.equals("6")) {//系统管理员
+                        RequestDispatcher requestDispatcher = request.getRequestDispatcher("manager_jsp/change_role.jsp");
+                        requestDispatcher.forward(request,response);
                     }
                 }
                 else {
