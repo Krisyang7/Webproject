@@ -8,6 +8,9 @@ import java.util.List;
 public interface StudentDao extends Dao {
     Student getStudentById(String studentId) throws SQLException;
 
+    Student getStudentByIdandcollege(String studentId,String college) throws SQLException;
+
+
     // Method to update a student's phone number
     void updateStudentPhoneNumber(String studentId, String newPhoneNumber) throws SQLException;
 
@@ -15,4 +18,5 @@ public interface StudentDao extends Dao {
     void updateStudentEmail(String studentId, String newEmail) throws SQLException;
 
      List<Student> search_college(String academy) throws SQLException;
+
 }

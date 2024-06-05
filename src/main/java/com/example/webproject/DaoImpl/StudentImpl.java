@@ -65,6 +65,40 @@ public class StudentImpl implements StudentDao {
     }
 
     @Override
+    public Student getStudentByIdandcollege(String studentId, String college) throws SQLException{
+        Connection conn = getConnection();
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM students WHERE student_id = ? and college= ?");
+        stmt.setString(1, studentId);
+        stmt.setString(2, college);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            // Assuming a constructor that matches the fetched columns
+            return new Student(
+                    rs.getString("student_id"),
+                    rs.getString("name"),
+                    rs.getString("gender"),
+                    rs.getString("email"),
+                    rs.getString("address"),
+                    rs.getString("nativePlace"),
+                    rs.getString("phonenumber"),
+                    rs.getString("college"),
+                    rs.getString("trainstart"),
+                    rs.getString("trainend"),
+                    rs.getString("policyStatus"),
+                    rs.getString("marrystatus"),
+                    rs.getString("mentor"),
+                    rs.getString("major"),
+                    rs.getString("degree"),
+                    rs.getString("judgeing")
+            );
+        }
+        rs.close();
+        stmt.close();
+        conn.close();
+        return null;
+    }
+
+    @Override
     public void updateStudentPhoneNumber(String studentId, String newPhoneNumber) throws SQLException {
         Connection conn = getConnection();
         PreparedStatement stmt = conn.prepareStatement("UPDATE students SET phonenumber = ? WHERE student_id = ?");

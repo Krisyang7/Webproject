@@ -20,9 +20,10 @@ public class SearchStudentServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String studentId = request.getParameter("studentId");
+        String college= (String) request.getSession().getAttribute("college");
         Student student = null;
         try {
-            student = studentDao.getStudentById(studentId);
+            student = studentDao.getStudentByIdandcollege(studentId,college);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -39,9 +40,10 @@ public class SearchStudentServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String studentId = request.getParameter("studentId");
+        String college= (String) request.getSession().getAttribute("college");
         Student student = null;
         try {
-            student = studentDao.getStudentById(studentId);
+            student = studentDao.getStudentByIdandcollege(studentId,college);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
