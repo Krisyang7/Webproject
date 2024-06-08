@@ -3,6 +3,7 @@ package com.example.webproject.DaoImpl;
 import com.example.webproject.Bean.Student;
 import com.example.webproject.Bean.Update;
 import com.example.webproject.Daos.Manager_update;
+import com.example.webproject.SM.SM2Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Connection;
@@ -42,10 +43,10 @@ public class Manager_updateImpl implements Manager_update {
         String major = request.getParameter("major");
         String degree = request.getParameter("degree");
         String mentor = request.getParameter("mentor");
-        String phonenumber = request.getParameter("phonenumber");
-        String email = request.getParameter("email");
+        String phonenumber = SM2Utils.encrypt(request.getParameter("phonenumber")) ;
+        String email =SM2Utils.encrypt(request.getParameter("email")) ;
         String nativePlace = request.getParameter("nativePlace");
-        String address = request.getParameter("address");
+        String address =SM2Utils.encrypt(request.getParameter("address")) ;
         String trainstart = request.getParameter("trainstart");
         String trainend = request.getParameter("trainend");
         String marryStatus = request.getParameter("marryStatus");
@@ -92,10 +93,10 @@ public class Manager_updateImpl implements Manager_update {
                     rs.getString("student_id"),
                     rs.getString("name"),
                     rs.getString("gender"),
-                    rs.getString("email"),
-                    rs.getString("address"),
+                   SM2Utils.decrypt(rs.getString("email")) ,
+                   SM2Utils.decrypt(rs.getString("address")) ,
                     rs.getString("nativePlace"),
-                    rs.getString("phonenumber"),
+                   SM2Utils.decrypt(rs.getString("phonenumber")) ,
                     rs.getString("college"),
                     rs.getString("trainstart"),
                     rs.getString("trainend"),

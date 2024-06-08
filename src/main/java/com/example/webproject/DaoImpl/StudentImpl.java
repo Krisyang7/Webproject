@@ -2,6 +2,7 @@ package com.example.webproject.DaoImpl;
 
 import com.example.webproject.Bean.Student;
 import com.example.webproject.Daos.StudentDao;
+import com.example.webproject.SM.SM2Utils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,10 +44,10 @@ public class StudentImpl implements StudentDao {
                     rs.getString("student_id"),
                     rs.getString("name"),
                     rs.getString("gender"),
-                    rs.getString("email"),
-                    rs.getString("address"),
+                    SM2Utils.decrypt(rs.getString("email")) ,
+                    SM2Utils.decrypt(rs.getString("address")) ,
                     rs.getString("nativePlace"),
-                    rs.getString("phonenumber"),
+                    SM2Utils.decrypt(rs.getString("phonenumber")) ,
                     rs.getString("college"),
                     rs.getString("trainstart"),
                     rs.getString("trainend"),
@@ -77,10 +78,10 @@ public class StudentImpl implements StudentDao {
                     rs.getString("student_id"),
                     rs.getString("name"),
                     rs.getString("gender"),
-                    rs.getString("email"),
-                    rs.getString("address"),
+                    SM2Utils.decrypt(rs.getString("email")) ,
+                    SM2Utils.decrypt(rs.getString("address")) ,
                     rs.getString("nativePlace"),
-                    rs.getString("phonenumber"),
+                    SM2Utils.decrypt(rs.getString("phonenumber")) ,
                     rs.getString("college"),
                     rs.getString("trainstart"),
                     rs.getString("trainend"),
@@ -102,7 +103,7 @@ public class StudentImpl implements StudentDao {
     public void updateStudentPhoneNumber(String studentId, String newPhoneNumber) throws SQLException {
         Connection conn = getConnection();
         PreparedStatement stmt = conn.prepareStatement("UPDATE students SET phonenumber = ? WHERE student_id = ?");
-        stmt.setString(1, newPhoneNumber);
+        stmt.setString(1,SM2Utils.encrypt(newPhoneNumber) );
         stmt.setString(2, studentId);
         stmt.executeUpdate();
         stmt.close();
@@ -113,7 +114,7 @@ public class StudentImpl implements StudentDao {
     public void updateStudentEmail(String studentId, String newEmail) throws SQLException {
         Connection conn = getConnection();
         PreparedStatement stmt = conn.prepareStatement("UPDATE students SET email = ? WHERE student_id = ?");
-        stmt.setString(1, newEmail);
+        stmt.setString(1,SM2Utils.encrypt(newEmail) );
         stmt.setString(2, studentId);
         stmt.executeUpdate();
         stmt.close();
@@ -142,10 +143,10 @@ public class StudentImpl implements StudentDao {
                     rs.getString("student_id"),
                     rs.getString("name"),
                     rs.getString("gender"),
-                    rs.getString("email"),
-                    rs.getString("address"),
+                    SM2Utils.decrypt(rs.getString("email")) ,
+                    SM2Utils.decrypt(rs.getString("address")) ,
                     rs.getString("nativePlace"),
-                    rs.getString("phonenumber"),
+                    SM2Utils.decrypt(rs.getString("phonenumber")) ,
                     rs.getString("college"),
                     rs.getString("trainstart"),
                     rs.getString("trainend"),

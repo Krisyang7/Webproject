@@ -3,6 +3,7 @@ package com.example.webproject.DaoImpl;
 import com.example.webproject.Bean.Student;
 import com.example.webproject.Bean.Teacher;
 import com.example.webproject.Daos.TeacherDao;
+import com.example.webproject.SM.SM2Utils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -143,11 +144,11 @@ public class TeacherImpl implements TeacherDao {
                     set.getString("teacher_id"),
                     set.getString("name"),
                     set.getString("gender"),
-                    set.getString("email"),
-                    set.getString("address"),
+                    SM2Utils.decrypt(set.getString("email")) ,
+                    SM2Utils.decrypt(set.getString("address")) ,
                     set.getString("nativePlace"),
                     set.getString("college"),
-                    set.getString("phonenumber"),
+                    SM2Utils.decrypt(set.getString("phonenumber")) ,
                     set.getString("trainstart"),
                     set.getString("trainend"),
                     set.getString("policyStatus"),
@@ -166,7 +167,7 @@ public class TeacherImpl implements TeacherDao {
         String sql="update teacher set phonenumber=? where teacher_id=?";
         Connection connection=getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1,newPhoneNumber);
+        preparedStatement.setString(1,SM2Utils.encrypt(newPhoneNumber) );
         preparedStatement.setString(2,teacherId);
         preparedStatement.executeUpdate();
         connection.close();
@@ -178,7 +179,7 @@ public class TeacherImpl implements TeacherDao {
         String sql="update teacher set email=? where teacher_id=?";
         Connection connection=getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1,newEmail);
+        preparedStatement.setString(1,SM2Utils.encrypt(newEmail) );
         preparedStatement.setString(2,teacherId);
         preparedStatement.executeUpdate();
         connection.close();
@@ -189,7 +190,7 @@ public class TeacherImpl implements TeacherDao {
         String sql="update teacher set address=? where teacher_id=?";
         Connection connection=getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1,newAddress);
+        preparedStatement.setString(1,SM2Utils.encrypt(newAddress) );
         preparedStatement.setString(2,teacherId);
         preparedStatement.executeUpdate();
         connection.close();

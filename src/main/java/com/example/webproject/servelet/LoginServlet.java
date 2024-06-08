@@ -1,11 +1,13 @@
 package com.example.webproject.servelet;
 
 
+import cn.hutool.crypto.digest.SM3;
 import com.example.webproject.Bean.Student;
 import com.example.webproject.Bean.Teacher;
 import com.example.webproject.DaoImpl.LoginDaoImpl;
 import com.example.webproject.DaoImpl.StudentImpl;
 import com.example.webproject.DaoImpl.TeacherImpl;
+import com.example.webproject.SM.SM3Utils;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -50,6 +52,12 @@ public class LoginServlet extends HttpServlet {
         }
         String userid = request.getParameter("id");
         String password = request.getParameter("password");
+        password= SM3Utils.encrypt(password);//加密
+        if(password.equals(SM3Utils.encrypt(userid))){
+            RequestDispatcher dispatcher = request.getRequestDispatcher("change_password.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
         String sql = "select * from login where login.id=? and login.password=?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, userid);

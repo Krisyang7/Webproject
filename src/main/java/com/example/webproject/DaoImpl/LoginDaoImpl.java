@@ -2,6 +2,7 @@ package com.example.webproject.DaoImpl;
 
 import com.example.webproject.Bean.Student;
 import com.example.webproject.Daos.LoginDao;
+import com.example.webproject.SM.SM3Utils;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -33,7 +34,7 @@ public class LoginDaoImpl implements LoginDao {
         Date now=new Date();
         java.sql.Date sqlDate = new java.sql.Date(now.getTime());
         PreparedStatement stmt = conn.prepareStatement("UPDATE login SET password = ? ,lastPasswordChangeDate= ? WHERE id = ?");
-        stmt.setString(1, password);
+        stmt.setString(1, SM3Utils.encrypt(password) );
         stmt.setString(3, id);
         stmt.setDate(2,sqlDate);
         stmt.executeUpdate();

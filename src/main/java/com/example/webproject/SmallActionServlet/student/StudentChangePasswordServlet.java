@@ -1,6 +1,7 @@
 package com.example.webproject.SmallActionServlet.student;
 
 import com.example.webproject.DaoImpl.LoginDaoImpl;
+import com.example.webproject.SM.SM3Utils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -31,7 +32,7 @@ public class StudentChangePasswordServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
         // 检查输入的旧密码是否正确
-        if (!oldPassword.equals(savedPassword)) {
+        if (!SM3Utils.encrypt(oldPassword).equals(savedPassword)&&!savedPassword.equals(id)) {
             request.getSession().setAttribute("error", "原密码输入错误");
             response.sendRedirect("change_password.jsp");
             return;
