@@ -41,7 +41,7 @@ public class LoginDaoImpl implements LoginDao {
         stmt.close();
         conn.close();
         LoginDaoImpl loginDao=new LoginDaoImpl();
-        String dairy="update password="+password;
+        String dairy="update password="+SM3Utils.encrypt(password);
         loginDao.SetDiary(id,dairy);
     }
 

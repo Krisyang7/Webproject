@@ -1,6 +1,7 @@
 package com.example.webproject.SmallActionServlet.student;
 
 import com.example.webproject.DaoImpl.LoginDaoImpl;
+import com.example.webproject.DaoImpl.StudentImpl;
 import com.example.webproject.SM.SM3Utils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
