@@ -74,7 +74,7 @@ public class SM2Utils {
      */
     public static String encrypt(BCECPublicKey publicKey, String data, int modeType) {
         //加密模式
-        if(data.isEmpty())return "";
+        if(data==null)return "";
         SM2Engine.Mode mode = SM2Engine.Mode.C1C3C2;
         if (modeType != 1) {
             mode = SM2Engine.Mode.C1C2C3;
