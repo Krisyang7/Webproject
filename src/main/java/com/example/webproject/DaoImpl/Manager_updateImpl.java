@@ -34,6 +34,8 @@ public class Manager_updateImpl implements Manager_update {
         }
 
     }
+
+
     @Override
     public void commit_update(HttpServletRequest request) throws SQLException {
         String studentId = request.getParameter("student_id");
@@ -60,13 +62,13 @@ public class Manager_updateImpl implements Manager_update {
         ps.setString(2, name);
         ps.setString(3, gender);
         ps.setString(4, college);
-        ps.setString(5, major);
+        ps.setString(5, SM2Utils.encrypt(major));
         ps.setString(6, degree);
-        ps.setString(7, mentor);
-        ps.setString(8, phonenumber);
-        ps.setString(9, email);
-        ps.setString(10, nativePlace);
-        ps.setString(11, address);
+        ps.setString(7, SM2Utils.encrypt(mentor));
+        ps.setString(8, SM2Utils.encrypt(phonenumber));
+        ps.setString(9, SM2Utils.encrypt(email));
+        ps.setString(10, SM2Utils.encrypt(nativePlace));
+        ps.setString(11, SM2Utils.encrypt(address));
         ps.setString(12, trainstart);
         ps.setString(13, trainend);
         ps.setString(14, marryStatus);
