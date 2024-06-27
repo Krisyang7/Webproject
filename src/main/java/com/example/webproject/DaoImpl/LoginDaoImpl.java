@@ -45,6 +45,7 @@ public class LoginDaoImpl implements LoginDao {
         loginDao.SetDiary(id,dairy);
     }
 
+
     @Override
     public String GetPassword(String id) throws SQLException {
         Connection conn = getConnection();

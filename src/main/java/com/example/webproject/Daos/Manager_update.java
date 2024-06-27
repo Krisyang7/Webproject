@@ -3,7 +3,7 @@ package com.example.webproject.Daos;
 import com.example.webproject.Bean.Student;
 import com.example.webproject.Bean.Update;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.util.List;
 

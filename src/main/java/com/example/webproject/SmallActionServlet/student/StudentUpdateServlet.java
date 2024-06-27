@@ -5,7 +5,10 @@ package com.example.webproject.SmallActionServlet.student;
 //import jakarta.servlet.ServletException;
 //import jakarta.servlet.http.HttpServlet;
 //import jakarta.servlet.http.HttpServletRequest;
+
 //import jakarta.servlet.http.HttpServletResponse;
+
+
 
 import com.example.webproject.Bean.Student;
 import com.example.webproject.DaoImpl.StudentImpl;
@@ -14,6 +17,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;

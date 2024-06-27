@@ -145,15 +145,15 @@ public class StudentImpl implements StudentDao {
                     rs.getString("gender"),
                     SM2Utils.decrypt(rs.getString("email")) ,
                     SM2Utils.decrypt(rs.getString("address")) ,
-                    rs.getString("nativePlace"),
+                    SM2Utils.decrypt(rs.getString("nativePlace")),
                     SM2Utils.decrypt(rs.getString("phonenumber")) ,
                     rs.getString("college"),
                     rs.getString("trainstart"),
                     rs.getString("trainend"),
                     rs.getString("policyStatus"),
                     rs.getString("marrystatus"),
-                    rs.getString("mentor"),
-                    rs.getString("major"),
+                    SM2Utils.decrypt(rs.getString("mentor")),
+                    SM2Utils.decrypt(rs.getString("major")),
                     rs.getString("degree"),
                     rs.getString("judgeing")
             );

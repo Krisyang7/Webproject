@@ -62,10 +62,10 @@ public class TeacherImpl implements TeacherDao {
                 "WHERE " +
                 "    (student_id = ? OR ? = '') " + // 如果student_id参数为空字符串，则始终为真
                 "    AND (name LIKE CONCAT('%', ?, '%') OR ? = '') " + // 如果name参数为空字符串，则不应用过滤条件
-                "    AND (mentor LIKE CONCAT('%', ?, '%') OR ? = '') " +
+                "    AND (mentor =? OR ? = '') " +
                 "    AND (nativePlace = ? OR ? = '') " +
                 "    AND (college LIKE CONCAT('%', ?, '%') OR ? = '') " +
-                "    AND (major LIKE CONCAT('%', ?, '%') OR ? = '')";
+                "    AND (major =? OR ? = '')";
         List<Student> list=new ArrayList<>();
         Connection connection=getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -75,21 +75,39 @@ public class TeacherImpl implements TeacherDao {
         preparedStatement.setString(3,name);
         preparedStatement.setString(4,name);
 
-        preparedStatement.setString(5,mentor);
+        preparedStatement.setString(5, mentor.isEmpty() ? "" : SM2Utils.encrypt(mentor));
         preparedStatement.setString(6,mentor);
 
-        preparedStatement.setString(7,nativePlace);
+        preparedStatement.setString(7,nativePlace.isEmpty()?"":SM2Utils.encrypt(nativePlace));
         preparedStatement.setString(8,nativePlace);
 
         preparedStatement.setString(9,college);
         preparedStatement.setString(10,college);
 
-        preparedStatement.setString(11,major);
+        preparedStatement.setString(11,major.isEmpty()?"":SM2Utils.encrypt(major));
         preparedStatement.setString(12,major);
 
         ResultSet set = preparedStatement.executeQuery();
         while (set.next()){
-            list.add(new Student(set.getString("student_id"),set.getString("name"),set.getString("gender"),set.getString("email"),set.getString("address"),set.getString("nativePlace"),set.getString("phonenumber"),set.getString("college"),set.getString("trainstart"),set.getString("trainend"),set.getString("policyStatus"),set.getString("marrystatus"),set.getString("mentor"),set.getString("major"),set.getString("degree")));
+            String a=set.getString("student_id");
+            String b=set.getString("name");
+            String c=set.getString("gender");
+            String d=SM2Utils.decrypt(set.getString("email"));
+            String e=SM2Utils.decrypt(set.getString("address"));
+            String f=SM2Utils.decrypt(set.getString("nativePlace"));
+            String g=SM2Utils.decrypt(set.getString("phonenumber"));
+            String h=set.getString("college");
+            String i=set.getString("trainstart");
+            String j=set.getString("trainend");
+            String k=set.getString("policyStatus");
+            String l=set.getString("marrystatus");
+            String m=SM2Utils.decrypt(set.getString("mentor"));
+            String n=SM2Utils.decrypt(set.getString("major"));
+            String o=set.getString("degree");
+            list.add(new Student(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o));
+            if (list.size()==998){
+                System.out.println(1);
+            }
         }
         TeacherImpl teacher=new TeacherImpl();
         String sqla="Select * from students where id="+id+" and name="+name+" and mentor"+mentor+" and nativePlace"+nativePlace+" and college"+college+" and major"+major;
@@ -121,7 +139,7 @@ public class TeacherImpl implements TeacherDao {
 
         ResultSet set = preparedStatement.executeQuery();
         while (set.next()){
-            list.add(new Teacher(set.getString("teacher_id"),set.getString("name"),set.getString("nameSpell"),set.getString("gender"),set.getString("email"),set.getString("address"),set.getString("nativePlace"),set.getString("phonenumber"),set.getString("college"),set.getString("trainstart"),set.getString("trainend"),set.getString("policyStatus"),set.getString("marrystatus"),set.getString("status")));
+            list.add(new Teacher(set.getString("teacher_id"),set.getString("name"),set.getString("nameSpell"),set.getString("gender"),SM2Utils.decrypt(set.getString("email")),SM2Utils.decrypt(set.getString("address")),SM2Utils.decrypt(set.getString("nativePlace")),SM2Utils.decrypt(set.getString("phonenumber")),set.getString("college"),set.getString("trainstart"),set.getString("trainend"),set.getString("policyStatus"),set.getString("marrystatus"),SM2Utils.decrypt(set.getString("status"))));
         }
         TeacherImpl teacher=new TeacherImpl();
         String diary="select * from teacher where id="+id+" and name="+name+" and college="+college+" and status"+status;
@@ -146,7 +164,7 @@ public class TeacherImpl implements TeacherDao {
                     set.getString("gender"),
                     SM2Utils.decrypt(set.getString("email")) ,
                     SM2Utils.decrypt(set.getString("address")) ,
-                    set.getString("nativePlace"),
+                    SM2Utils.decrypt(set.getString("nativePlace")),
                     set.getString("college"),
                     SM2Utils.decrypt(set.getString("phonenumber")) ,
                     set.getString("trainstart"),

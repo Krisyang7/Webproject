@@ -5,7 +5,7 @@ import com.example.webproject.Bean.Update;
 import com.example.webproject.Daos.Manager_update;
 import com.example.webproject.SM.SM2Utils;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

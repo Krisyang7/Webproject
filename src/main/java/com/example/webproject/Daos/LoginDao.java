@@ -7,6 +7,4 @@ public interface LoginDao extends Dao {
     String GetPassword(String id) throws SQLException;
 
 
-
-
 }

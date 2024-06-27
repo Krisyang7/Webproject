@@ -7,7 +7,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.servlet.http.HttpServletResponse;
+
+
 
 //import jakarta.servlet.ServletException;
 //import jakarta.servlet.annotation.WebServlet;
@@ -21,7 +24,7 @@ import java.sql.SQLException;
 public class StudentChangePasswordServlet extends HttpServlet {
     private LoginDaoImpl loginDao=new LoginDaoImpl();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
+        String id = (String) request.getSession().getAttribute("id");
         String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
         String confirmPassword = request.getParameter("confirmPassword");
@@ -33,7 +36,7 @@ public class StudentChangePasswordServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
         // 检查输入的旧密码是否正确
-        if (!SM3Utils.encrypt(oldPassword).equals(savedPassword)&&!savedPassword.equals(id)) {
+        if (!SM3Utils.encrypt(oldPassword).equals(savedPassword)) {
             request.getSession().setAttribute("error", "原密码输入错误");
             response.sendRedirect("change_password.jsp");
             return;
