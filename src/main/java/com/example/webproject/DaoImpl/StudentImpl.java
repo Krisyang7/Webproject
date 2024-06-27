@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import com.example.webproject.SM.SM2Utils;
 
 public class StudentImpl implements StudentDao {
 
@@ -36,6 +37,7 @@ public class StudentImpl implements StudentDao {
     public Student getStudentById(String studentId) throws SQLException {
         Connection conn = getConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM students WHERE student_id = ?");
+
         stmt.setString(1, studentId);
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
@@ -53,8 +55,8 @@ public class StudentImpl implements StudentDao {
                     rs.getString("trainend"),
                     rs.getString("policyStatus"),
                     rs.getString("marrystatus"),
-                    rs.getString("mentor"),
-                    rs.getString("major"),
+                    SM2Utils.decrypt(rs.getString("mentor")),
+                    SM2Utils.decrypt(rs.getString("major")),
                     rs.getString("degree"),
                     rs.getString("judgeing")
             );
@@ -87,8 +89,8 @@ public class StudentImpl implements StudentDao {
                     rs.getString("trainend"),
                     rs.getString("policyStatus"),
                     rs.getString("marrystatus"),
-                    rs.getString("mentor"),
-                    rs.getString("major"),
+                    SM2Utils.decrypt(rs.getString("mentor")),
+                    SM2Utils.decrypt(rs.getString("major")),
                     rs.getString("degree"),
                     rs.getString("judgeing")
             );
